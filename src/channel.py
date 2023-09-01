@@ -24,6 +24,27 @@ class Channel:
         self.video_count = data['items'][0]['statistics']['videoCount']
         self.channel_views_count = data['items'][0]['statistics']['viewCount']
 
+    def __str__(self):
+        return f'{self.title} {self.url}'
+
+    def __add__(self, other):
+        return self.channel_subscription_count + other.channel_subscription_count
+
+    def __sub__(self, other):
+        return self.channel_subscription_count - other.channel_subscription_count
+
+    def __lt__(self, other):
+        return self.channel_subscription_count < other.channel_subscription_count
+
+    def __gt__(self, other):
+        return self.channel_subscription_count > other.channel_subscription_count
+
+    def __le__(self, other):
+        return self.channel_subscription_count <= other.channel_subscription_count
+
+    def __ge__(self, other):
+        return self.channel_subscription_count >= other.channel_subscription_count
+
     def print_info(self):
         """Выводит в консоль информацию о канале."""
         channel = self.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
