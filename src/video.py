@@ -11,12 +11,19 @@ class Video:
     count_likes = 0
 
     def __init__(self, video_id):
-        self.video_id = video_id
-        data = self.get_video_data()
-        self.title = data['items'][0]['snippet']['title']
-        self.url = 'https://www.youtube.com/' + f'{self.video_id}'
-        self.count_views = data['items'][0]['statistics']['viewCount']
-        self.count_likes = data['items'][0]['statistics']['likeCount']
+        try:
+            self.video_id = video_id
+            data = self.get_video_data()
+            self.title = data['items'][0]['snippet']['title']
+            self.url = 'https://www.youtube.com/' + f'{self.video_id}'
+            self.count_views = data['items'][0]['statistics']['viewCount']
+            self.count_likes = data['items'][0]['statistics']['likeCount']
+        except IndexError:
+            self.video_id = video_id
+            self.title = None
+            self.link = None
+            self.views_count = None
+            self.like_count = None
 
     @classmethod
     def get_service(cls):
